@@ -1,32 +1,37 @@
-import createError from "http-errors";
-import express from "express";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
-import books from "./api/books/books.controller.js";
+import createError from 'http-errors';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors'
+import parentDebug from 'debug'
 
-const app = express();
+import books from './api/books/books.controller.js'
+import { getConfig } from './config.js';
+import { getCorsPublicOptions } from './utils/cors.js';
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+const debug = parentDebug('book:app');
 
-/**
- * Controllers
- */
-app.use(books);
+export default function createApp() {
+  const app = express();
+  const config = getConfig();
 
-app.use(function (req, res, next) {
+  app.use(logger('dev'));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  
+  const corsOptions = getCorsPublicOptions(config);
+
+  /**
+   * Controllers
+   */
+  app.use(cors(corsOptions), books)
+  
+  app.use(function(req, res, next) {
     next(createError(404));
-});
+  });
+  
+  debug('App setup succesful')
 
-// eslint-disable-next-line no-unused-vars
-app.use(function (err, req, res, next) {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
-
-    res.status(err.status || 500);
-    res.render("error");
-});
-
-export default app;
+  return app;
+}

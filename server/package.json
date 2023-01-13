@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "start": "node server.js",
+        "lint": "eslint .",
         "dev": "DEBUG=book:* nodemon server.js"
     },
     "dependencies": {

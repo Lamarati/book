@@ -11,11 +11,13 @@ const staticOptions = {
 
 export function mergeOptions() {
     const whitelisted = process.env.CORS_WHITELISTED_DOMAINS.split(",");
+    const nodeEnv = process.env.NODE_ENV || "production";
 
     const envOptions = {
         cors: {
             whitelisted,
         },
+        nodeEnv,
     };
 
     const options = {};
