@@ -1,0 +1,7 @@
+services:
+  database:
+    image: mongo:4.2.19
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./dbData:/datadb
