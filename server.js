@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import app from '../app';
-import * as parentDebugger from 'debug'
+import app from './app.js';
+import parentDebugger from 'debug'
 import http from 'http';
 
 const debug = parentDebugger('book:server');
