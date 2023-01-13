@@ -1,28 +1,28 @@
-import _ from 'lodash'
+import _ from "lodash";
 
-export const config = {}
+export const config = {};
 
 const staticOptions = {
     cors: {
         whitelisted: [],
-        foo: 'test'
-    }
-}
+        foo: "test",
+    },
+};
 
 export function mergeOptions() {
-    const whitelisted = process.env.CORS_WHITELISTED_DOMAINS.split(',');
+    const whitelisted = process.env.CORS_WHITELISTED_DOMAINS.split(",");
 
     const envOptions = {
         cors: {
-            whitelisted
-        }
-    }
+            whitelisted,
+        },
+    };
 
-    const options = {}
+    const options = {};
 
-    _.merge(options, staticOptions, envOptions)
+    _.merge(options, staticOptions, envOptions);
 
-    Object.defineProperty(config, 'options', {
+    Object.defineProperty(config, "options", {
         writable: false,
         value: options,
         enumerable: true,

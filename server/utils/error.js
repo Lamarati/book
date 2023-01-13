@@ -1,10 +1,9 @@
-
-import createError from 'http-errors';
+import createError from "http-errors";
 
 export function handleError(error) {
-    console.error(error)
-    
+    console.error(error);
+
     if (!error?.isTrusted) {
-        throw createError.InternalServerError(error.message)
+        throw createError.InternalServerError(error.message);
     }
 }

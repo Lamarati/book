@@ -1,9 +1,9 @@
-import { MongoClient } from "mongodb"
+import { MongoClient } from "mongodb";
 
-import parentDebug from 'debug'
+import parentDebug from "debug";
 import { handleError } from "../utils/error.js";
 
-const debug = parentDebug('book:connect');
+const debug = parentDebug("book:connect");
 
 export default async function connectToMongoDb(uri) {
     try {
@@ -12,17 +12,17 @@ export default async function connectToMongoDb(uri) {
 
         await client.db("admin").command({ ping: 1 });
 
-        debug('Connected succesfullly to Mongo on URI', uri)
+        debug("Connected succesfullly to Mongo on URI", uri);
 
-        client.on('close', () => {
-            debug('Closing mongo client')
-            client.close()
+        client.on("close", () => {
+            debug("Closing mongo client");
+            client.close();
         });
 
-        client.on('error', (error) => {
-            debug('Error on mongo client')
-            handleError(error)
-        })
+        client.on("error", (error) => {
+            debug("Error on mongo client");
+            handleError(error);
+        });
     } catch (error) {
         handleError(error);
     }

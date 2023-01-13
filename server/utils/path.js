@@ -1,4 +1,4 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
+import path from "path";
+import { fileURLToPath } from "url";
 
-export const getDirname = (importMeta) => path.dirname(fileURLToPath(importMeta.url))
+export const getDirname = (importMeta) => path.dirname(fileURLToPath(importMeta.url));
