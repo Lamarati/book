@@ -9,7 +9,7 @@ import usersRouter from './routes/users.js';
 import { getDirname } from './utils/path.js';
 
 const app = express();
-const dirname = getDirname()
+const dirname = getDirname(import.meta)
 
 app.set('views', path.join(dirname, 'views'));
 app.set('view engine', 'pug');
