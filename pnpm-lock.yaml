@@ -9,9 +9,10 @@ overrides:
 specifiers:
   cookie-parser: ~1.4.4
   debug: ~2.6.9
+  dotenv: ^16.0.3
   express: '>=4.17.3'
   http-errors: ~1.6.3
-  mongodb: '4.2'
+  mongodb: ^4.2
   morgan: ~1.9.1
   nodemon: ^2.0.20
   pug: 2.0.0-beta11
@@ -19,6 +20,7 @@ specifiers:
 dependencies:
   cookie-parser: 1.4.6
   debug: 2.6.9
+  dotenv: 16.0.3
   express: 4.18.2
   http-errors: 1.6.3
   mongodb: 4.2.2
@@ -363,6 +365,11 @@ packages:
 
   /doctypes/1.1.0:
     resolution: {integrity: sha512-LLBi6pEqS6Do3EKQ3J0NqHWV5hhb78Pi8vvESYwyOy2c31ZEZVdtitdzsQsKb7878PEERhzUk0ftqGhG6Mz+pQ==}
+    dev: false
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /ee-first/1.1.1:

@@ -1,19 +1,27 @@
-#!/usr/bin/env node
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 import app from './app.js';
-import parentDebugger from 'debug'
+import parentDebug from 'debug'
 import http from 'http';
+import { createMongoClient } from './db/client.js';
+import { handleError } from './utils/error.js';
 
-const debug = parentDebugger('book:server');
+const debug = parentDebug('book:server');
 const port = normalizePort(process.env.PORT || '3000');
 
 app.set('port', port);
 
 const server = http.createServer(app);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+async function start() {
+  await createMongoClient();
+
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+}
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
@@ -59,3 +67,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+start().catch(handleError);
