@@ -2,25 +2,31 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-import app from './app.js';
+import createApp from './app.js';
 import parentDebug from 'debug'
 import http from 'http';
 import { createMongoClient } from './db/client.js';
 import { handleError } from './utils/error.js';
+import { mergeOptions } from './config.js';
 
 const debug = parentDebug('book:server');
 const port = normalizePort(process.env.PORT || '3000');
 
-app.set('port', port);
-
-const server = http.createServer(app);
-
 async function start() {
   await createMongoClient();
+  
+  mergeOptions();
+
+  const app = createApp();
+
+  app.set('port', port);
+
+  const server = http.createServer(app);
+
 
   server.listen(port);
   server.on('error', onError);
-  server.on('listening', onListening);
+  server.on('listening', onListening(server));
 }
 
 function normalizePort(val) {
@@ -60,12 +66,14 @@ function onError(error) {
   }
 }
 
-function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+function onListening(server) {
+  return () => {
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
 }
 
 
